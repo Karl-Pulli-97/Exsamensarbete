@@ -58,7 +58,7 @@ public class FishingLogDbContext : DbContext
             entity.HasOne(x => x.User)
                 .WithMany(x => x.FishingTrips)
                 .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             entity.HasOne(x => x.Location)
                 .WithMany(x => x.FishingTrips)
