@@ -1,0 +1,6 @@
+@Exsamensarbete_Karl_Pulli_HostAddress = http://localhost:5008
+
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
