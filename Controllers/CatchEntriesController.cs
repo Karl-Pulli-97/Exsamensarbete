@@ -28,4 +28,21 @@ public class CatchesController : ControllerBase
 
         return Ok(catches);
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<CatchEntry>> GetById(Guid id)
+    {
+        var catchEntry = await _context.CatchEntries
+            .Include(c => c.Species)
+            .Include(c => c.Location)
+            .Include(c => c.Lure)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (catchEntry == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(catchEntry);
+    }
 }
