@@ -37,4 +37,16 @@ public class LuresController : ControllerBase
         return Ok(lure);
     }
 
+    [HttpPost]
+    public async Task<ActionResult<Lure>> Create(Lure lure)
+    {
+        lure.Id = Guid.NewGuid();
+
+        _context.Lures.Add(lure);
+
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetById), new { id = lure.Id }, lure);
+    }
+
 }
