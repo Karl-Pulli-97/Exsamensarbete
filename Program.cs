@@ -11,6 +11,12 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<FishingLogDbContext>();
+    SeedData.Initialize(context);
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
