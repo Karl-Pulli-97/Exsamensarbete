@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Exsamensarbete_Karl_Pulli")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e371734ad4513cabd039dfd0197876a2ddc13d48")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e4cd69c810017af6debb7a869340ea3e1b619cb")]
 [assembly: System.Reflection.AssemblyProductAttribute("Exsamensarbete_Karl_Pulli")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Exsamensarbete_Karl_Pulli")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
