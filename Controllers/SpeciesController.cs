@@ -34,4 +34,15 @@ public class SpeciesController : ControllerBase
 
         return Ok(species);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<Species>> Create(Species species)
+    {
+        species.Id = Guid.NewGuid();
+
+        _context.Species.Add(species);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetById), new { id = species.Id }, species);
+    }
 }
