@@ -91,4 +91,21 @@ public class CatchesController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var catchEntry = await _context.CatchEntries.FindAsync(id);
+
+        if (catchEntry == null)
+        {
+            return NotFound();
+        }
+
+        _context.CatchEntries.Remove(catchEntry);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }
