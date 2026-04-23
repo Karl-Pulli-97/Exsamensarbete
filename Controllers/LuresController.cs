@@ -49,4 +49,28 @@ public class LuresController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = lure.Id }, lure);
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, Lure lure)
+    {
+        if (id != lure.Id)
+        {
+            return BadRequest();
+        }
+
+        var existing = await _context.Lures.FindAsync(id);
+
+        if (existing == null)
+        {
+            return NotFound();
+        }
+
+        existing.Name = lure.Name;
+        existing.Type = lure.Type;
+        existing.Color = lure.Color;
+        existing.Brand = lure.Brand;
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }
