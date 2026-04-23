@@ -7,7 +7,7 @@ GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species
 Accept: application/json
 
 ### Hämta en specifik art
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/PUT-GUID-HERE
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
 Accept: application/json
 
 ### Skapa ny art
@@ -19,17 +19,16 @@ Content-Type: application/json
 }
 
 ### Uppdatera art
-PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/PUT-GUID-HERE
+PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
 Content-Type: application/json
 
 {
-  "id": "PUT-GUID-HERE",
+  "id": "3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a",
   "name": "Gädda"
 }
 
 ### Ta bort art
-DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/PUT-GUID-HERE
-
+DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
 
 ### ─── LOCATIONS ───
 
@@ -66,3 +65,39 @@ Content-Type: application/json
 
 ### Ta bort plats
 DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations/4cd980f3-2336-42e1-add8-9c9d5230e894
+
+### ─── LURES ───
+
+### Hämta alla beten
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures
+Accept: application/json
+
+### Hämta ett specifikt bete
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
+Accept: application/json
+
+### Skapa nytt bete
+POST {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures
+Content-Type: application/json
+
+{
+  "name": "Abu Garcia Toby",
+  "type": "Skeddrag",
+  "color": "Silver",
+  "brand": "Abu Garcia"
+}
+
+### Uppdatera bete
+PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures/8b6eddff-5179-498c-9b58-4be945a74322
+Content-Type: application/json
+
+{
+  "id": "8b6eddff-5179-498c-9b58-4be945a74322",
+  "name": "Rapala Original Floater",
+  "type": "Wobbler",
+  "color": "Röd/vit",
+  "brand": "Rapala"
+}
+
+### Ta bort bete
+DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures/8b6eddff-5179-498c-9b58-4be945a74322
