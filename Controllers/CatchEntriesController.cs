@@ -57,4 +57,38 @@ public class CatchesController : ControllerBase
 
         return CreatedAtAction(nameof(GetById), new { id = catchEntry.Id }, catchEntry);
     }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, CatchEntry catchEntry)
+    {
+        if (id != catchEntry.Id)
+        {
+            return BadRequest();
+        }
+
+        var existing = await _context.CatchEntries.FindAsync(id);
+
+        if (existing == null)
+        {
+            return NotFound();
+        }
+
+        existing.SpeciesId = catchEntry.SpeciesId;
+        existing.LocationId = catchEntry.LocationId;
+        existing.LureId = catchEntry.LureId;
+        existing.FishingTripId = catchEntry.FishingTripId;
+        existing.CaughtAt = catchEntry.CaughtAt;
+        existing.Weight = catchEntry.Weight;
+        existing.Length = catchEntry.Length;
+        existing.Released = catchEntry.Released;
+        existing.Technique = catchEntry.Technique;
+        existing.Notes = catchEntry.Notes;
+        existing.Weather = catchEntry.Weather;
+        existing.WaterTemperature = catchEntry.WaterTemperature;
+        existing.ImageUrl = catchEntry.ImageUrl;
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }
