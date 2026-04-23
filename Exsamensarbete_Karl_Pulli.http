@@ -1,6 +1,29 @@
 @Exsamensarbete_Karl_Pulli_HostAddress = http://localhost:5008
 
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/weatherforecast/
+### Hämta alla arter
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species
 Accept: application/json
 
-###
+### Hämta en specifik art
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/1
+Accept: application/json
+
+### Skapa ny art
+POST {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species
+Content-Type: application/json
+
+{
+  "name": "Abborre"
+}
+
+### Uppdatera art
+PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Gädda"
+}
+
+### Ta bort art
+DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/1

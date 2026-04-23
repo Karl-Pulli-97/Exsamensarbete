@@ -23,4 +23,15 @@ public class SpeciesController : ControllerBase
 
         return Ok(species);
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Species>> GetById(Guid id)
+    {
+        var species = await _context.Species.FindAsync(id);
+
+        if (species == null)
+            return NotFound();
+
+        return Ok(species);
+    }
 }
