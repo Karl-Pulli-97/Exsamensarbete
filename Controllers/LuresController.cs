@@ -73,4 +73,21 @@ public class LuresController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var lure = await _context.Lures.FindAsync(id);
+
+        if (lure == null)
+        {
+            return NotFound();
+        }
+
+        _context.Lures.Remove(lure);
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
 }
