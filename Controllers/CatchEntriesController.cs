@@ -45,4 +45,16 @@ public class CatchesController : ControllerBase
 
         return Ok(catchEntry);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<CatchEntry>> Create(CatchEntry catchEntry)
+    {
+        catchEntry.Id = Guid.NewGuid();
+
+        _context.CatchEntries.Add(catchEntry);
+
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetById), new { id = catchEntry.Id }, catchEntry);
+    }
 }
