@@ -1,11 +1,13 @@
 @Exsamensarbete_Karl_Pulli_HostAddress = http://localhost:5008
 
+### ─── SPECIES ───
+
 ### Hämta alla arter
 GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species
 Accept: application/json
 
 ### Hämta en specifik art
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/1
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/PUT-GUID-HERE
 Accept: application/json
 
 ### Skapa ny art
@@ -17,13 +19,50 @@ Content-Type: application/json
 }
 
 ### Uppdatera art
-PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/1
+PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/PUT-GUID-HERE
 Content-Type: application/json
 
 {
-  "id": 1,
+  "id": "PUT-GUID-HERE",
   "name": "Gädda"
 }
 
 ### Ta bort art
-DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/1
+DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/PUT-GUID-HERE
+
+
+### ─── LOCATIONS ───
+
+### Hämta alla platser
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations
+Accept: application/json
+
+### Hämta en specifik plats
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations/659fea7d-3e1e-4611-b5fb-85294dd49dc7
+Accept: application/json
+
+### Skapa ny plats
+POST {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations
+Content-Type: application/json
+
+{
+  "name": "Vänern",
+  "latitude": 58.9,
+  "longitude": 13.5,
+  "description": "Sveriges största sjö"
+}
+
+### Uppdatera plats
+PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations/659fea7d-3e1e-4611-b5fb-85294dd49dc7
+Content-Type: application/json
+
+{
+  "id": "659fea7d-3e1e-4611-b5fb-85294dd49dc7",
+  "name": "Vättern",
+  "latitude": 58.4,
+  "longitude": 14.6,
+  "description": "Djup och klar sjö"
+}
+
+### Ta bort plats
+DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations/4cd980f3-2336-42e1-add8-9c9d5230e894
