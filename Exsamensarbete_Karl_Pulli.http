@@ -101,3 +101,60 @@ Content-Type: application/json
 
 ### Ta bort bete
 DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures/8b6eddff-5179-498c-9b58-4be945a74322
+
+### ─── CATCHES ───
+
+### Hämta alla fångster
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches
+Accept: application/json
+
+### Hämta en specifik fångst
+GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches/25e8dcc4-959c-4c8d-aed2-b5dee9fde740
+Accept: application/json
+
+### Skapa ny fångst (minimal)
+POST {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches
+Content-Type: application/json
+
+{
+  "userId": "11111111-1111-1111-1111-111111111111",
+  "speciesId": "d02730c2-6253-4743-a383-d26ab70a5b75",
+  "caughtAt": "2026-04-23T18:30:00",
+  "released": true
+}
+
+### Skapa ny fångst (komplett)
+POST {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches
+Content-Type: application/json
+
+{
+  "userId": "11111111-1111-1111-1111-111111111111",
+  "speciesId": "d02730c2-6253-4743-a383-d26ab70a5b75",
+  "locationId": "659fea7d-3e1e-4611-b5fb-85294dd49dc7",
+  "lureId": "8b6eddff-5179-498c-9b58-4be945a74322",
+  "caughtAt": "2026-04-23T18:30:00",
+  "weight": 1.25,
+  "length": 42.5,
+  "released": true,
+  "technique": "Spinnfiske",
+  "notes": "Fin kväll, grått väder",
+  "weather": "Molnigt, 12°C",
+  "waterTemperature": "8°C"
+}
+
+### Uppdatera fångst
+PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches/2ee08736-88b1-4be6-a87c-e39b0492fbc1
+Content-Type: application/json
+
+{
+  "id": "2ee08736-88b1-4be6-a87c-e39b0492fbc1",
+  "userId": "11111111-1111-1111-1111-111111111111",
+  "speciesId": "d02730c2-6253-4743-a383-d26ab70a5b75",
+  "caughtAt": "2026-04-23T19:00:00",
+  "weight": 1.5,
+  "length": 45.0,
+  "released": true
+}
+
+### Ta bort fångst
+DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches/2ee08736-88b1-4be6-a87c-e39b0492fbc1
