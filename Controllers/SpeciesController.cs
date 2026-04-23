@@ -30,7 +30,9 @@ public class SpeciesController : ControllerBase
         var species = await _context.Species.FindAsync(id);
 
         if (species == null)
+        {
             return NotFound();
+        }
 
         return Ok(species);
     }
@@ -51,14 +53,35 @@ public class SpeciesController : ControllerBase
     public async Task<IActionResult> Update(Guid id, Species species)
     {
         if (id != species.Id)
+        {
             return BadRequest();
+        }
 
         var existing = await _context.Species.FindAsync(id);
 
         if (existing == null)
+        {
             return NotFound();
+        }
 
         existing.Name = species.Name;
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var species = await _context.Species.FindAsync(id);
+
+        if (species == null)
+        {
+            return NotFound();
+        }
+
+        _context.Species.Remove(species);
 
         await _context.SaveChangesAsync();
 
