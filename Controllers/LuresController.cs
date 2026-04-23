@@ -24,4 +24,17 @@ public class LuresController : ControllerBase
         return Ok(lures);
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Lure>> GetById(Guid id)
+    {
+        var lure = await _context.Lures.FindAsync(id);
+
+        if (lure == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(lure);
+    }
+
 }
