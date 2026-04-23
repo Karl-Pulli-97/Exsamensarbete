@@ -41,8 +41,27 @@ public class SpeciesController : ControllerBase
         species.Id = Guid.NewGuid();
 
         _context.Species.Add(species);
+
         await _context.SaveChangesAsync();
 
         return CreatedAtAction(nameof(GetById), new { id = species.Id }, species);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, Species species)
+    {
+        if (id != species.Id)
+            return BadRequest();
+
+        var existing = await _context.Species.FindAsync(id);
+
+        if (existing == null)
+            return NotFound();
+
+        existing.Name = species.Name;
+
+        await _context.SaveChangesAsync();
+
+        return NoContent();
     }
 }
