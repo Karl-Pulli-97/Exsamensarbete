@@ -1,19 +1,19 @@
 using FishingLog.Api.Data;
 using FishingLog.Api.DTOs.Catches;
+using FishingLog.Api.Extensions;
 using FishingLog.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FishingLog.Api.Controllers;
 
 [ApiController]
-[Route("api/catches")]
+[Route("api/[controller]")]
+[Authorize]
 public class CatchEntriesController : ControllerBase
 {
     private readonly FishingLogDbContext _context;
-
-    private static readonly Guid SeedUserId =
-        Guid.Parse("11111111-1111-1111-1111-111111111111");
 
     public CatchEntriesController(FishingLogDbContext context)
     {
@@ -24,8 +24,10 @@ public class CatchEntriesController : ControllerBase
     public async Task<ActionResult<List<CatchEntryDto>>> GetAll(
         [FromQuery] CatchFilterRequest filter)
     {
+        var userId = User.GetUserId();
+
         var query = _context.CatchEntries
-            .Where(c => c.UserId == SeedUserId)
+            .Where(c => c.UserId == userId)
             .AsQueryable();
 
         if (filter.SpeciesId.HasValue)
@@ -71,8 +73,10 @@ public class CatchEntriesController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<CatchEntryDto>> GetById(Guid id)
     {
+        var userId = User.GetUserId();
+
         var dto = await _context.CatchEntries
-            .Where(c => c.Id == id && c.UserId == SeedUserId)
+            .Where(c => c.Id == id && c.UserId == userId)
             .Select(c => new CatchEntryDto
             {
                 Id = c.Id,
@@ -99,10 +103,12 @@ public class CatchEntriesController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Create(CreateCatchEntryRequest request)
     {
+        var userId = User.GetUserId();
+
         var entity = new CatchEntry
         {
             Id = Guid.NewGuid(),
-            UserId = SeedUserId,
+            UserId = userId,
             SpeciesId = request.SpeciesId,
             LocationId = request.LocationId,
             LureId = request.LureId,
@@ -126,8 +132,10 @@ public class CatchEntriesController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(Guid id, UpdateCatchEntryRequest request)
     {
+        var userId = User.GetUserId();
+
         var existing = await _context.CatchEntries
-            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == SeedUserId);
+            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId);
 
         if (existing == null)
             return NotFound();
@@ -152,8 +160,10 @@ public class CatchEntriesController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
+        var userId = User.GetUserId();
+
         var entity = await _context.CatchEntries
-            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == SeedUserId);
+            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId);
 
         if (entity == null)
             return NotFound();
