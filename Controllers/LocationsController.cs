@@ -2,11 +2,13 @@ using FishingLog.Api.Data;
 using FishingLog.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FishingLog.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class LocationsController : ControllerBase
 {
     private readonly FishingLogDbContext _context;
