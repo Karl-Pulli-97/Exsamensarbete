@@ -1,17 +1,17 @@
-@Exsamensarbete_Karl_Pulli_HostAddress = http://localhost:5008
+@FishingLog = http://localhost:5008
 
 ### ─── SPECIES ───
 
 ### Hämta alla arter
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species
+GET {{FishingLog}}/api/species
 Accept: application/json
 
 ### Hämta en specifik art
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
+GET {{FishingLog}}/api/species/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
 Accept: application/json
 
 ### Skapa ny art
-POST {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species
+POST {{FishingLog}}/api/species
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### Uppdatera art
-PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
+PUT {{FishingLog}}/api/species/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
 Content-Type: application/json
 
 {
@@ -28,20 +28,20 @@ Content-Type: application/json
 }
 
 ### Ta bort art
-DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/species/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
+DELETE {{FishingLog}}/api/species/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
 
 ### ─── LOCATIONS ───
 
 ### Hämta alla platser
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations
+GET {{FishingLog}}/api/locations
 Accept: application/json
 
 ### Hämta en specifik plats
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations/659fea7d-3e1e-4611-b5fb-85294dd49dc7
+GET {{FishingLog}}/api/locations/659fea7d-3e1e-4611-b5fb-85294dd49dc7
 Accept: application/json
 
 ### Skapa ny plats
-POST {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations
+POST {{FishingLog}}/api/locations
 Content-Type: application/json
 
 {
@@ -52,7 +52,7 @@ Content-Type: application/json
 }
 
 ### Uppdatera plats
-PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations/659fea7d-3e1e-4611-b5fb-85294dd49dc7
+PUT {{FishingLog}}/api/locations/659fea7d-3e1e-4611-b5fb-85294dd49dc7
 Content-Type: application/json
 
 {
@@ -64,20 +64,20 @@ Content-Type: application/json
 }
 
 ### Ta bort plats
-DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/locations/4cd980f3-2336-42e1-add8-9c9d5230e894
+DELETE {{FishingLog}}/api/locations/4cd980f3-2336-42e1-add8-9c9d5230e894
 
 ### ─── LURES ───
 
 ### Hämta alla beten
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures
+GET {{FishingLog}}/api/lures
 Accept: application/json
 
 ### Hämta ett specifikt bete
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
+GET {{FishingLog}}/api/lures/3c6ccf00-c1ab-43c2-bb62-3f275a9fc38a
 Accept: application/json
 
 ### Skapa nytt bete
-POST {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures
+POST {{FishingLog}}/api/lures
 Content-Type: application/json
 
 {
@@ -88,7 +88,7 @@ Content-Type: application/json
 }
 
 ### Uppdatera bete
-PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures/8b6eddff-5179-498c-9b58-4be945a74322
+PUT {{FishingLog}}/api/lures/8b6eddff-5179-498c-9b58-4be945a74322
 Content-Type: application/json
 
 {
@@ -100,36 +100,36 @@ Content-Type: application/json
 }
 
 ### Ta bort bete
-DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/lures/8b6eddff-5179-498c-9b58-4be945a74322
+DELETE {{FishingLog}}/api/lures/8b6eddff-5179-498c-9b58-4be945a74322
 
 ### ─── CATCHES ───
 
 ### Hämta alla fångster
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches
+GET {{FishingLog}}/api/catches
 Accept: application/json
 
 ### Filter: bara en specifik art
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches?speciesId=d02730c2-6253-4743-a383-d26ab70a5b75
+GET {{FishingLog}}/api/catches?speciesId=d02730c2-6253-4743-a383-d26ab70a5b75
 Accept: application/json
 
 ### Filter: datumintervall
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches?from=2026-04-01&to=2026-04-30
+GET {{FishingLog}}/api/catches?from=2026-04-01&to=2026-04-30
 Accept: application/json
 
 ### Filter: bara released
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches?released=true
+GET {{FishingLog}}/api/catches?released=true
 Accept: application/json
 
 ### Filter: kombinerat (art + plats + datum)
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches?speciesId=d02730c2-6253-4743-a383-d26ab70a5b75&locationId=659fea7d-3e1e-4611-b5fb-85294dd49dc7&from=2026-01-01
+GET {{FishingLog}}/api/catches?speciesId=d02730c2-6253-4743-a383-d26ab70a5b75&locationId=659fea7d-3e1e-4611-b5fb-85294dd49dc7&from=2026-01-01
 Accept: application/json
 
 ### Hämta en specifik fångst
-GET {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches/25e8dcc4-959c-4c8d-aed2-b5dee9fde740
+GET {{FishingLog}}/api/catches/25e8dcc4-959c-4c8d-aed2-b5dee9fde740
 Accept: application/json
 
 ### Skapa ny fångst (minimal)
-POST {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches
+POST {{FishingLog}}/api/catches
 Content-Type: application/json
 
 {
@@ -139,7 +139,7 @@ Content-Type: application/json
 }
 
 ### Skapa ny fångst (komplett)
-POST {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches
+POST {{FishingLog}}/api/catches
 Content-Type: application/json
 
 {
@@ -157,7 +157,7 @@ Content-Type: application/json
 }
 
 ### Uppdatera fångst
-PUT {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches/2ee08736-88b1-4be6-a87c-e39b0492fbc1
+PUT {{FishingLog}}/api/catches/2ee08736-88b1-4be6-a87c-e39b0492fbc1
 Content-Type: application/json
 
 {
@@ -169,4 +169,4 @@ Content-Type: application/json
 }
 
 ### Ta bort fångst
-DELETE {{Exsamensarbete_Karl_Pulli_HostAddress}}/api/catches/f5ad641c-2a6e-4060-b96b-90557481388f
+DELETE {{FishingLog}}/api/catches/f5ad641c-2a6e-4060-b96b-90557481388f
