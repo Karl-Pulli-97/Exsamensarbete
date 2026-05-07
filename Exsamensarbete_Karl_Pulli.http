@@ -170,3 +170,24 @@ Content-Type: application/json
 
 ### Ta bort fångst
 DELETE {{FishingLog}}/api/catches/f5ad641c-2a6e-4060-b96b-90557481388f
+
+### ─── AUTH ───
+
+### Registrera ny användare
+POST {{FishingLog}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@test.com",
+  "password": "test123",
+  "name": "Test Testsson"
+}
+
+### Logga in (testanvändaren från seeden)
+POST {{FishingLog}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "karl@test.com",
+  "password": "test123"
+}
