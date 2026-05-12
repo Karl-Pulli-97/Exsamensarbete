@@ -78,7 +78,7 @@ public static class SeedData
         // ── Lures ──
         var toby = new Lure { Id = Guid.NewGuid(), Name = "Abu Garcia Toby", Type = "Skeddrag", Color = "Silver", Brand = "Abu Garcia" };
         var rapala = new Lure { Id = Guid.NewGuid(), Name = "Rapala Original", Type = "Wobbler", Color = "Röd/vit", Brand = "Rapala" };
-        var spinnare = new Lure { Id = Guid.NewGuid(), Name = "Abu Garcia Droppen", Type = "Spinnare", Color = "Firetiger", Brand = "Abu Garcia" };
+        var spinnare = new Lure { Id = Guid.NewGuid(), Name = "Savage Gear Rotex Spinner", Type = "Spinnare", Color = "Firetiger", Brand = "Savage Gear" };
         var jigg = new Lure { Id = Guid.NewGuid(), Name = "Kopito Shad", Type = "Jigg", Color = "Motoroil", Brand = "Westin" };
         var wobbler = new Lure { Id = Guid.NewGuid(), Name = "Salmo Hornet", Type = "Wobbler", Color = "Perch", Brand = "Salmo" };
         var fluga = new Lure { Id = Guid.NewGuid(), Name = "Woolly Bugger", Type = "Fluga", Color = "Svart", Brand = "Generisk" };
