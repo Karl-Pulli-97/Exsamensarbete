@@ -1,5 +1,6 @@
-using FishingLog.Api.Data;
+using FishingLog.Api.DTOs.Catches;
 using FishingLog.Api.DTOs.Stats;
+using FishingLog.Api.Services;
 using FishingLog.Api.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,19 +13,18 @@ namespace FishingLog.Api.Controllers;
 [Authorize]
 public class StatsController : ControllerBase
 {
-    private readonly FishingLogDbContext _context;
+    private readonly CatchQueryService _catchQueryService;
 
-    public StatsController(FishingLogDbContext context)
+    public StatsController(CatchQueryService catchQueryService)
     {
-        _context = context;
+        _catchQueryService = catchQueryService;
     }
 
     [HttpGet("overview")]
-    public async Task<ActionResult<StatsOverviewDto>> GetOverview()
+    public async Task<ActionResult<StatsOverviewDto>> GetOverview([FromQuery] CatchFilterRequest filter)
     {
         var userId = User.GetUserId();
-
-        var catches = _context.CatchEntries.Where(c => c.UserId == userId);
+        var catches = _catchQueryService.GetFilteredCatches(userId, filter);
 
         var totalCatches = await catches.CountAsync();
         var releasedCatches = await catches.CountAsync(c => c.Released);
@@ -64,12 +64,10 @@ public class StatsController : ControllerBase
     }
 
     [HttpGet("by-species")]
-    public async Task<ActionResult<List<SpeciesStatsDto>>> GetBySpecies()
+    public async Task<ActionResult<List<SpeciesStatsDto>>> GetBySpecies([FromQuery] CatchFilterRequest filter)
     {
         var userId = User.GetUserId();
-
-        var stats = await _context.CatchEntries
-            .Where(c => c.UserId == userId)
+        var stats = await _catchQueryService.GetFilteredCatches(userId, filter)
             .GroupBy(c => c.Species!.Name)
             .Select(g => new SpeciesStatsDto
             {
@@ -85,12 +83,11 @@ public class StatsController : ControllerBase
     }
 
     [HttpGet("by-lure")]
-    public async Task<ActionResult<List<GroupStatsDto>>> GetByLure()
+    public async Task<ActionResult<List<GroupStatsDto>>> GetByLure([FromQuery] CatchFilterRequest filter)
     {
         var userId = User.GetUserId();
-
-        var stats = await _context.CatchEntries
-            .Where(c => c.UserId == userId && c.Lure != null)
+        var stats = await _catchQueryService.GetFilteredCatches(userId, filter)
+            .Where(c => c.Lure != null)
             .GroupBy(c => c.Lure!.Name)
             .Select(g => new GroupStatsDto
             {
@@ -104,12 +101,11 @@ public class StatsController : ControllerBase
     }
 
     [HttpGet("by-location")]
-    public async Task<ActionResult<List<GroupStatsDto>>> GetByLocation()
+    public async Task<ActionResult<List<GroupStatsDto>>> GetByLocation([FromQuery] CatchFilterRequest filter)
     {
         var userId = User.GetUserId();
-
-        var stats = await _context.CatchEntries
-            .Where(c => c.UserId == userId && c.Location != null)
+        var stats = await _catchQueryService.GetFilteredCatches(userId, filter)
+            .Where(c => c.Location != null)
             .GroupBy(c => c.Location!.Name)
             .Select(g => new GroupStatsDto
             {
@@ -123,12 +119,10 @@ public class StatsController : ControllerBase
     }
 
     [HttpGet("by-month")]
-    public async Task<ActionResult<List<MonthlyStatsDto>>> GetByMonth()
+    public async Task<ActionResult<List<MonthlyStatsDto>>> GetByMonth([FromQuery] CatchFilterRequest filter)
     {
         var userId = User.GetUserId();
-
-        var stats = await _context.CatchEntries
-            .Where(c => c.UserId == userId)
+        var stats = await _catchQueryService.GetFilteredCatches(userId, filter)
             .GroupBy(c => new { c.CaughtAt.Year, c.CaughtAt.Month })
             .Select(g => new MonthlyStatsDto
             {

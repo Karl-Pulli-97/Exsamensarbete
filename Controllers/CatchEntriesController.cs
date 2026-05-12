@@ -2,6 +2,7 @@ using FishingLog.Api.Data;
 using FishingLog.Api.DTOs.Catches;
 using FishingLog.Api.Extensions;
 using FishingLog.Api.Models;
+using FishingLog.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,14 @@ namespace FishingLog.Api.Controllers;
 public class CatchEntriesController : ControllerBase
 {
     private readonly FishingLogDbContext _context;
+    private readonly CatchQueryService _catchQueryService;
 
-    public CatchEntriesController(FishingLogDbContext context)
+    public CatchEntriesController(
+        FishingLogDbContext context,
+        CatchQueryService catchQueryService)
     {
         _context = context;
+        _catchQueryService = catchQueryService;
     }
 
     [HttpGet]
@@ -26,29 +31,7 @@ public class CatchEntriesController : ControllerBase
     {
         var userId = User.GetUserId();
 
-        var query = _context.CatchEntries
-            .Where(c => c.UserId == userId)
-            .AsQueryable();
-
-        if (filter.SpeciesId.HasValue)
-            query = query.Where(c => c.SpeciesId == filter.SpeciesId.Value);
-
-        if (filter.LocationId.HasValue)
-            query = query.Where(c => c.LocationId == filter.LocationId.Value);
-
-        if (filter.LureId.HasValue)
-            query = query.Where(c => c.LureId == filter.LureId.Value);
-
-        if (filter.From.HasValue)
-            query = query.Where(c => c.CaughtAt >= filter.From.Value);
-
-        if (filter.To.HasValue)
-            query = query.Where(c => c.CaughtAt <= filter.To.Value);
-
-        if (filter.Released.HasValue)
-            query = query.Where(c => c.Released == filter.Released.Value);
-
-        var result = await query
+        var result = await _catchQueryService.GetFilteredCatches(userId, filter)
             .OrderByDescending(c => c.CaughtAt)
             .Select(c => new CatchEntryDto
             {
