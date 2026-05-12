@@ -30,8 +30,11 @@ async function request<T>(
     });
 
     if (response.status === 401) {
-        localStorage.removeItem('token');
-        window.location.href = '/login';
+        const hadToken = localStorage.getItem('token') !== null;
+        if (hadToken) {
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+        }
         throw new ApiError(401, 'Unauthorized');
     }
 
