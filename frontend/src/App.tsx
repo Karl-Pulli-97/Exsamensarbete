@@ -3,6 +3,7 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { AddCatchPage } from './pages/AddCatchPage';
+import { CatchesPage } from './pages/CatchesPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
@@ -23,6 +24,14 @@ function App() {
         element={
           <ProtectedRoute>
             <AddCatchPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/catches"
+        element={
+          <ProtectedRoute>
+            <CatchesPage />
           </ProtectedRoute>
         }
       />

@@ -7,7 +7,7 @@ export function DashboardPage() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-slate-950 text-slate-100">
+            <div className="bg-slate-950 text-slate-100">
                 <Header />
                 <main className="max-w-6xl mx-auto px-4 py-8">
                     <div className="text-slate-400">Laddar...</div>
@@ -18,7 +18,7 @@ export function DashboardPage() {
 
     if (isError) {
         return (
-            <div className="min-h-screen bg-slate-950 text-slate-100">
+            <div className="bg-slate-950 text-slate-100">
                 <Header />
                 <main className="max-w-6xl mx-auto px-4 py-8">
                     <div className="text-red-400">Kunde inte hämta data. Försök igen senare.</div>
@@ -28,7 +28,7 @@ export function DashboardPage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-950 text-slate-100">
+        <div className="bg-slate-950 text-slate-100">
             <Header />
 
             <main className="max-w-6xl mx-auto px-4 py-8">

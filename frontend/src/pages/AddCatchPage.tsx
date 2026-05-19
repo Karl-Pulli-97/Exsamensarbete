@@ -59,7 +59,7 @@ export function AddCatchPage() {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-slate-950 text-slate-100">
+            <div className="bg-slate-950 text-slate-100">
                 <Header />
                 <main className="max-w-2xl mx-auto px-4 py-8">
                     <div className="text-slate-400">Laddar...</div>
@@ -69,7 +69,7 @@ export function AddCatchPage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-950 text-slate-100">
+        <div className="bg-slate-950 text-slate-100">
             <Header />
 
             <main className="max-w-2xl mx-auto px-4 py-8">
