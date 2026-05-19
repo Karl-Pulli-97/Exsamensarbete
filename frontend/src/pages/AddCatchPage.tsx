@@ -1,38 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Header } from '../components/Header';
-
-const dummySpecies = [
-    { id: '1', name: 'Abborre' },
-    { id: '2', name: 'Gädda' },
-    { id: '3', name: 'Gös' },
-    { id: '4', name: 'Öring' },
-    { id: '5', name: 'Regnbåge' },
-    { id: '6', name: 'Mört' },
-];
-
-const dummyLocations = [
-    { id: '1', name: 'Vänern' },
-    { id: '2', name: 'Vättern' },
-    { id: '3', name: 'Hornborgasjön' },
-    { id: '4', name: 'Unden' },
-    { id: '5', name: 'Grosken' },
-];
-
-const dummyLures = [
-    { id: '1', name: 'Abu Garcia Toby' },
-    { id: '2', name: 'Rapala Original' },
-    { id: '3', name: 'Abu Garcia Droppen' },
-    { id: '4', name: 'Kopito Shad' },
-    { id: '5', name: 'Salmo Hornet' },
-    { id: '6', name: 'Woolly Bugger' },
-    { id: '7', name: 'Daggmask' },
-];
+import { useReferenceData } from '../hooks/useReferenceData';
+import { catchesApi } from '../api/catchesApi';
+import type { CreateCatchRequest } from '../types/catch';
 
 const techniques = ['Spinnfiske', 'Mete', 'Flugfiske', 'Trolling', 'Pimpel'];
 
 export function AddCatchPage() {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const { species, locations, lures, isLoading } = useReferenceData();
 
     const [speciesId, setSpeciesId] = useState('');
     const [locationId, setLocationId] = useState('');
@@ -44,15 +23,49 @@ export function AddCatchPage() {
     const [technique, setTechnique] = useState('');
     const [weather, setWeather] = useState('');
     const [notes, setNotes] = useState('');
+    const [error, setError] = useState<string | null>(null);
+
+    const createMutation = useMutation({
+        mutationFn: (data: CreateCatchRequest) => catchesApi.create(data),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['catches'] });
+            queryClient.invalidateQueries({ queryKey: ['stats'] });
+            navigate('/');
+        },
+        onError: () => {
+            setError('Kunde inte spara fångsten. Försök igen.');
+        }
+    });
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        console.log({
-            speciesId, locationId, lureId, caughtAt,
-            weight, length, released, technique, weather, notes
-        });
-        alert('Fångst sparad! (Dummy - backend ej kopplat än)');
-        navigate('/catches');
+        setError(null);
+
+        const data: CreateCatchRequest = {
+            speciesId,
+            locationId: locationId || undefined,
+            lureId: lureId || undefined,
+            caughtAt: new Date(caughtAt).toISOString(),
+            weight: weight ? parseFloat(weight) : undefined,
+            length: length ? parseFloat(length) : undefined,
+            released,
+            technique: technique || undefined,
+            weather: weather || undefined,
+            notes: notes || undefined,
+        };
+
+        createMutation.mutate(data);
+    }
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen bg-slate-950 text-slate-100">
+                <Header />
+                <main className="max-w-2xl mx-auto px-4 py-8">
+                    <div className="text-slate-400">Laddar...</div>
+                </main>
+            </div>
+        );
     }
 
     return (
@@ -75,7 +88,7 @@ export function AddCatchPage() {
                                 className="select-input"
                             >
                                 <option value="">Välj art...</option>
-                                {dummySpecies.map(s => (
+                                {species.map(s => (
                                     <option key={s.id} value={s.id}>{s.name}</option>
                                 ))}
                             </select>
@@ -123,7 +136,7 @@ export function AddCatchPage() {
                                 className="select-input"
                             >
                                 <option value="">Välj plats...</option>
-                                {dummyLocations.map(l => (
+                                {locations.map(l => (
                                     <option key={l.id} value={l.id}>{l.name}</option>
                                 ))}
                             </select>
@@ -148,7 +161,7 @@ export function AddCatchPage() {
                                 className="select-input"
                             >
                                 <option value="">Välj bete...</option>
-                                {dummyLures.map(l => (
+                                {lures.map(l => (
                                     <option key={l.id} value={l.id}>{l.name}</option>
                                 ))}
                             </select>
@@ -173,7 +186,7 @@ export function AddCatchPage() {
                                 value={weather}
                                 onChange={(e) => setWeather(e.target.value)}
                                 className="text-input"
-                                placeholder="exempel (Soligt, 18°C, lätt vind)"
+                                placeholder="Exempel (Soligt, 18°C, lätt vind)"
                             />
                         </Field>
                     </Section>
@@ -190,6 +203,12 @@ export function AddCatchPage() {
                         </Field>
                     </Section>
 
+                    {error && (
+                        <div className="bg-red-500/10 border border-red-500/30 text-red-300 text-sm px-4 py-2.5 rounded-lg">
+                            {error}
+                        </div>
+                    )}
+
                     <div className="flex gap-3 pt-2">
                         <button
                             type="button"
@@ -200,9 +219,10 @@ export function AddCatchPage() {
                         </button>
                         <button
                             type="submit"
-                            className="flex-1 bg-teal-700 hover:bg-teal-600 text-white font-medium py-3 px-4 rounded-lg transition shadow-lg shadow-teal-900/30"
+                            disabled={createMutation.isPending}
+                            className="flex-1 bg-teal-700 hover:bg-teal-600 disabled:bg-slate-700 text-white font-medium py-3 px-4 rounded-lg transition shadow-lg shadow-teal-900/30"
                         >
-                            Spara fångst
+                            {createMutation.isPending ? 'Sparar...' : 'Spara fångst'}
                         </button>
                     </div>
                 </form>

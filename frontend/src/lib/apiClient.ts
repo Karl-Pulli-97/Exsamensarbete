@@ -43,11 +43,12 @@ async function request<T>(
         throw new ApiError(response.status, text || response.statusText);
     }
 
-    if (response.status === 204) {
+    if (response.status === 204 || response.status === 201) {
         return undefined as T;
     }
 
-    return response.json();
+    const text = await response.text();
+    return text ? JSON.parse(text) : undefined as T;
 }
 
 export const apiClient = {
