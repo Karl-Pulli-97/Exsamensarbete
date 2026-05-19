@@ -23,11 +23,15 @@ public class StatsController : ControllerBase
     [HttpGet("overview")]
     public async Task<ActionResult<StatsOverviewDto>> GetOverview([FromQuery] CatchFilterRequest filter)
     {
-        var userId = User.GetUserId();
-        var catches = _catchQueryService.GetFilteredCatches(userId, filter);
+        var catches = _catchQueryService.GetFilteredCatches(User.GetUserId(), filter);
+
+        var now = DateTime.UtcNow;
+        var startOfMonth = new DateTime(now.Year, now.Month, 1);
 
         var totalCatches = await catches.CountAsync();
         var releasedCatches = await catches.CountAsync(c => c.Released);
+        var catchesThisMonth = await catches.CountAsync(c => c.CaughtAt >= startOfMonth);
+        var fishingTrips = await catches.Select(c => c.CaughtAt.Date).Distinct().CountAsync();
         var largestWeight = await catches.MaxAsync(c => (decimal?)c.Weight);
         var largestLength = await catches.MaxAsync(c => (decimal?)c.Length);
 
@@ -55,6 +59,8 @@ public class StatsController : ControllerBase
         {
             TotalCatches = totalCatches,
             ReleasedCatches = releasedCatches,
+            CatchesThisMonth = catchesThisMonth,
+            FishingTrips = fishingTrips,
             LargestWeight = largestWeight,
             LargestLength = largestLength,
             MostCaughtSpecies = mostCaughtSpecies,

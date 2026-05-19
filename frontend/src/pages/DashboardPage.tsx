@@ -39,8 +39,8 @@ export function DashboardPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                     <StatCard label="Totalt antal fångster" value={overview?.totalCatches ?? 0} />
                     <StatCard label="Återutsatta" value={overview?.releasedCatches ?? 0} accent="amber" />
-                    <StatCard label="Fångster denna månad" value={0} />
-                    <StatCard label="Fiskepass" value={0} accent="amber" />
+                    <StatCard label="Fångster denna månad" value={overview?.catchesThisMonth ?? 0} />
+                    <StatCard label="Fiskepass" value={overview?.fishingTrips ?? 0} accent="amber" />
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

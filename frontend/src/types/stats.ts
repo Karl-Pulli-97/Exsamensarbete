@@ -1,6 +1,8 @@
 export interface StatsOverview {
     totalCatches: number;
     releasedCatches: number;
+    catchesThisMonth: number;
+    fishingTrips: number;
     largestWeight: number | null;
     largestLength: number | null;
     mostCaughtSpecies: string | null;
