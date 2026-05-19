@@ -1,22 +1,31 @@
 import { Header } from '../components/Header';
+import { useDashboard } from '../hooks/useDashboard';
 
 export function DashboardPage() {
     const userName = localStorage.getItem('userName') || 'Användare';
+    const { overview, recentCatches, isLoading, isError } = useDashboard();
 
-    const stats = {
-        totalCatches: 40,
-        releasedCatches: 22,
-        mostCaughtSpecies: 'Abborre',
-        bestLure: 'Abu Garcia Toby',
-        bestLocation: 'Vänern',
-    };
+    if (isLoading) {
+        return (
+            <div className="min-h-screen bg-slate-950 text-slate-100">
+                <Header />
+                <main className="max-w-6xl mx-auto px-4 py-8">
+                    <div className="text-slate-400">Laddar...</div>
+                </main>
+            </div>
+        );
+    }
 
-    const recentCatches = [
-        { id: '1', species: 'Gädda', location: 'Vänern', weight: 5.2, length: 78, caughtAt: '2026-05-15' },
-        { id: '2', species: 'Abborre', location: 'Hornborgasjön', weight: 1.1, length: 38, caughtAt: '2026-05-12' },
-        { id: '3', species: 'Gös', location: 'Vättern', weight: 3.4, length: 62, caughtAt: '2026-05-10' },
-        { id: '4', species: 'Öring', location: 'Unden', weight: 2.1, length: 48, caughtAt: '2026-05-08' },
-    ];
+    if (isError) {
+        return (
+            <div className="min-h-screen bg-slate-950 text-slate-100">
+                <Header />
+                <main className="max-w-6xl mx-auto px-4 py-8">
+                    <div className="text-red-400">Kunde inte hämta data. Försök igen senare.</div>
+                </main>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -28,25 +37,25 @@ export function DashboardPage() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    <StatCard label="Totalt antal fångster" value={stats.totalCatches} />
-                    <StatCard label="Återutsatta" value={stats.releasedCatches} accent="amber" />
-                    <StatCard label="Fångster denna månad" value={8} />
-                    <StatCard label="Fiskepass" value={15} accent="amber" />
+                    <StatCard label="Totalt antal fångster" value={overview?.totalCatches ?? 0} />
+                    <StatCard label="Återutsatta" value={overview?.releasedCatches ?? 0} accent="amber" />
+                    <StatCard label="Fångster denna månad" value={0} />
+                    <StatCard label="Fiskepass" value={0} accent="amber" />
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="lg:col-span-1 space-y-4">
                         <HighlightCard
                             label="Vanligaste art"
-                            value={stats.mostCaughtSpecies}
+                            value={overview?.mostCaughtSpecies ?? 'Ingen data'}
                         />
                         <HighlightCard
                             label="Bästa bete"
-                            value={stats.bestLure}
+                            value={overview?.bestLure ?? 'Ingen data'}
                         />
                         <HighlightCard
                             label="Bästa plats"
-                            value={stats.bestLocation}
+                            value={overview?.bestLocation ?? 'Ingen data'}
                         />
                     </div>
 
@@ -59,21 +68,31 @@ export function DashboardPage() {
                                 </a>
                             </div>
                             <div className="space-y-3">
-                                {recentCatches.map(c => (
-                                    <div
-                                        key={c.id}
-                                        className="flex items-center justify-between p-3 rounded-lg bg-slate-950/50 border border-slate-800 hover:border-slate-700 transition"
-                                    >
-                                        <div>
-                                            <div className="font-medium text-slate-100">{c.species}</div>
-                                            <div className="text-sm text-slate-400">{c.location}</div>
+                                {recentCatches && recentCatches.length > 0 ? (
+                                    recentCatches.map(c => (
+                                        <div
+                                            key={c.id}
+                                            className="flex items-center justify-between p-3 rounded-lg bg-slate-950/50 border border-slate-800 hover:border-slate-700 transition"
+                                        >
+                                            <div>
+                                                <div className="font-medium text-slate-100">{c.speciesName}</div>
+                                                <div className="text-sm text-slate-400">{c.locationName ?? 'Okänd plats'}</div>
+                                            </div>
+                                            <div className="text-right">
+                                                <div className="text-amber-400 font-medium">
+                                                    {c.weight ? `${c.weight} kg` : '—'} · {c.length ? `${c.length} cm` : '—'}
+                                                </div>
+                                                <div className="text-xs text-slate-500">
+                                                    {new Date(c.caughtAt).toLocaleDateString('sv-SE')}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="text-right">
-                                            <div className="text-amber-400 font-medium">{c.weight} kg · {c.length} cm</div>
-                                            <div className="text-xs text-slate-500">{c.caughtAt}</div>
-                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="text-slate-400 text-center py-8">
+                                        Inga fångster ännu. Logga din första!
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </div>
                     </div>

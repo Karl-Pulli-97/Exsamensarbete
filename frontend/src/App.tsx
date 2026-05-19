@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { AddCatchPage } from './pages/AddCatchPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
@@ -14,6 +15,14 @@ function App() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/add"
+        element={
+          <ProtectedRoute>
+            <AddCatchPage />
           </ProtectedRoute>
         }
       />
