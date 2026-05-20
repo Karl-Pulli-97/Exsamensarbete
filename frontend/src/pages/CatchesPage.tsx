@@ -48,7 +48,6 @@ export function CatchesPage() {
                     </Link>
                 </div>
 
-                {/* Filter */}
                 <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-5 mb-6">
                     <div className="flex items-center justify-between mb-4">
                         <h2 className="text-lg font-serif italic text-slate-200">Filter</h2>
@@ -143,7 +142,6 @@ export function CatchesPage() {
                     </div>
                 </div>
 
-                {/* Lista */}
                 {isLoading && <div className="text-slate-400">Laddar...</div>}
                 {isError && <div className="text-red-400">Kunde inte hämta fångster.</div>}
 

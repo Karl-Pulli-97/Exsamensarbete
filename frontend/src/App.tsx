@@ -4,6 +4,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { AddCatchPage } from './pages/AddCatchPage';
 import { CatchesPage } from './pages/CatchesPage';
+import { StatsPage } from './pages/StatsPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 function App() {
@@ -32,6 +33,14 @@ function App() {
         element={
           <ProtectedRoute>
             <CatchesPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/stats"
+        element={
+          <ProtectedRoute>
+            <StatsPage />
           </ProtectedRoute>
         }
       />

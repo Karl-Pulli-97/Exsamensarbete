@@ -15,6 +15,8 @@ export interface SpeciesStats {
     count: number;
     averageWeight: number | null;
     largestWeight: number | null;
+    averageLength: number | null;
+    largestLength: number | null;
 }
 
 export interface GroupStats {

@@ -80,7 +80,9 @@ public class StatsController : ControllerBase
                 SpeciesName = g.Key,
                 Count = g.Count(),
                 AverageWeight = g.Average(c => c.Weight),
-                LargestWeight = g.Max(c => c.Weight)
+                LargestWeight = g.Max(c => c.Weight),
+                AverageLength = g.Average(c => c.Length),
+                LargestLength = g.Max(c => c.Length)
             })
             .OrderByDescending(s => s.Count)
             .ToListAsync();
