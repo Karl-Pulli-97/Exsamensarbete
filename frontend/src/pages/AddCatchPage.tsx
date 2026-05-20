@@ -22,6 +22,7 @@ export function AddCatchPage() {
     const [released, setReleased] = useState(false);
     const [technique, setTechnique] = useState('');
     const [weather, setWeather] = useState('');
+    const [waterTemperature, setWaterTemperature] = useState('');
     const [notes, setNotes] = useState('');
     const [error, setError] = useState<string | null>(null);
 
@@ -51,6 +52,7 @@ export function AddCatchPage() {
             released,
             technique: technique || undefined,
             weather: weather || undefined,
+            waterTemperature: waterTemperature || undefined,
             notes: notes || undefined,
         };
 
@@ -186,7 +188,17 @@ export function AddCatchPage() {
                                 value={weather}
                                 onChange={(e) => setWeather(e.target.value)}
                                 className="text-input"
-                                placeholder="Exempel (Soligt, 18°C, lätt vind)"
+                                placeholder="exempel (Soligt, 18°C, lätt vind)"
+                            />
+                        </Field>
+
+                        <Field label="Vattentemperatur">
+                            <input
+                                type="text"
+                                value={waterTemperature}
+                                onChange={(e) => setWaterTemperature(e.target.value)}
+                                className="text-input"
+                                placeholder="exempel (12°C)"
                             />
                         </Field>
                     </Section>

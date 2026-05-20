@@ -28,7 +28,7 @@ export function LoginPage() {
     }
 
     return (
-        <div className="bg-slate-950 text-slate-100 flex items-center justify-center px-4 relative overflow-hidden">
+        <div className="bg-slate-950 text-slate-100 flex items-center justify-center px-4 relative overflow-hidden min-h-screen">
             <div className="absolute inset-0 bg-gradient-to-br from-teal-950/40 via-slate-950 to-slate-950 pointer-events-none" />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-teal-500/5 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />

@@ -198,11 +198,16 @@ export function CatchesPage() {
                                     </div>
                                 </div>
 
-                                {(c.weather || c.notes) && (
+                                {(c.weather || c.waterTemperature || c.notes) && (
                                     <div className="mt-3 pt-3 border-t border-slate-800 text-sm">
                                         {c.weather && (
                                             <div className="text-slate-400">
                                                 <span className="text-slate-500">Väder:</span> {c.weather}
+                                            </div>
+                                        )}
+                                        {c.waterTemperature && (
+                                            <div className="text-slate-400">
+                                                <span className="text-slate-500">Vattentemperatur:</span> {c.waterTemperature}
                                             </div>
                                         )}
                                         {c.notes && (
