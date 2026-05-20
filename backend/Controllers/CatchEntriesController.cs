@@ -84,7 +84,7 @@ public class CatchEntriesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create(CreateCatchEntryRequest request)
+    public async Task<ActionResult> Create(CatchEntryRequest request)
     {
         var userId = User.GetUserId();
 
@@ -113,7 +113,7 @@ public class CatchEntriesController : ControllerBase
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(Guid id, UpdateCatchEntryRequest request)
+    public async Task<IActionResult> Update(Guid id, CatchEntryRequest request)
     {
         var userId = User.GetUserId();
 

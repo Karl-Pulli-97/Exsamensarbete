@@ -1,6 +1,6 @@
 namespace FishingLog.Api.DTOs.Catches;
 
-public class CreateCatchEntryRequest
+public class CatchEntryRequest
 {
     public Guid SpeciesId { get; set; }
     public Guid? LocationId { get; set; }

@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Header } from '../components/Header';
 import { useReferenceData } from '../hooks/useReferenceData';
 import { catchesApi } from '../api/catchesApi';
-import type { CreateCatchRequest } from '../types/catch';
+import type { CatchEntryRequest } from '../types/catch';
 
 const techniques = ['Spinnfiske', 'Mete', 'Flugfiske', 'Trolling', 'Pimpel'];
 
@@ -27,7 +27,7 @@ export function AddCatchPage() {
     const [error, setError] = useState<string | null>(null);
 
     const createMutation = useMutation({
-        mutationFn: (data: CreateCatchRequest) => catchesApi.create(data),
+        mutationFn: (data: CatchEntryRequest) => catchesApi.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['catches'] });
             queryClient.invalidateQueries({ queryKey: ['stats'] });
@@ -42,7 +42,7 @@ export function AddCatchPage() {
         e.preventDefault();
         setError(null);
 
-        const data: CreateCatchRequest = {
+        const data: CatchEntryRequest = {
             speciesId,
             locationId: locationId || undefined,
             lureId: lureId || undefined,

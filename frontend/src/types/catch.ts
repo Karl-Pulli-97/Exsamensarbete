@@ -13,7 +13,7 @@ export interface CatchEntry {
     waterTemperature: string | null;
 }
 
-export interface CreateCatchRequest {
+export interface CatchEntryRequest {
     speciesId: string;
     locationId?: string;
     lureId?: string;

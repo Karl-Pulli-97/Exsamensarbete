@@ -1,5 +1,5 @@
 import { apiClient } from '../lib/apiClient';
-import type { CatchEntry, CreateCatchRequest, CatchFilter } from '../types/catch';
+import type { CatchEntry, CatchEntryRequest, CatchFilter } from '../types/catch';
 
 function buildQueryString(filter?: CatchFilter): string {
     if (!filter) return '';
@@ -24,10 +24,10 @@ export const catchesApi = {
     getById: (id: string) =>
         apiClient.get<CatchEntry>(`/catchentries/${id}`),
 
-    create: (data: CreateCatchRequest) =>
+    create: (data: CatchEntryRequest) =>
         apiClient.post<void>('/catchentries', data),
 
-    update: (id: string, data: CreateCatchRequest) =>
+    update: (id: string, data: CatchEntryRequest) =>
         apiClient.put<void>(`/catchentries/${id}`, data),
 
     delete: (id: string) =>
