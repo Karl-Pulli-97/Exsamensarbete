@@ -19,6 +19,7 @@ export function LoginPage() {
             const response = await authApi.login({ email, password });
             localStorage.setItem('token', response.token);
             localStorage.setItem('userName', response.name);
+            localStorage.setItem('userEmail', response.email);
             navigate('/');
         } catch (err) {
             setError('Fel email eller lösenord');

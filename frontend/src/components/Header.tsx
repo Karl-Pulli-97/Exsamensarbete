@@ -1,16 +1,9 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Logo } from './Logo';
+import { UserMenu } from './UserMenu';
 
 export function Header() {
-    const navigate = useNavigate();
     const location = useLocation();
-    const userName = localStorage.getItem('userName') || 'Användare';
-
-    function handleLogout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('userName');
-        navigate('/login');
-    }
 
     const navItems = [
         { path: '/', label: 'Dashboard' },
@@ -46,15 +39,8 @@ export function Header() {
                     ))}
                 </nav>
 
-                <div className="flex items-center gap-3">
-                    <span className="text-sm text-slate-400 hidden md:block">{userName}</span>
-                    <button
-                        onClick={handleLogout}
-                        className="text-sm text-slate-300 hover:text-amber-400 transition"
-                    >
-                        Logga ut
-                    </button>
-                </div>
+                <UserMenu />
+
             </div>
         </header>
     );

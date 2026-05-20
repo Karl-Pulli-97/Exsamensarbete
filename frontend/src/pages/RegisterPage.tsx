@@ -20,6 +20,7 @@ export function RegisterPage() {
             const response = await authApi.register({ email, name, password });
             localStorage.setItem('token', response.token);
             localStorage.setItem('userName', response.name);
+            localStorage.setItem('userEmail', response.email);
             navigate('/');
         } catch (err) {
             setError('Det gick inte att registrera. Email kanske används redan.');
