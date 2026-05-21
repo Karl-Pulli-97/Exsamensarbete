@@ -7,8 +7,8 @@ export function Header() {
 
     const navItems = [
         { path: '/', label: 'Dashboard' },
-        { path: '/catches', label: 'Fångster' },
         { path: '/add', label: 'Logga fångst' },
+        { path: '/catches', label: 'Dina fångster' },
         { path: '/stats', label: 'Statistik' },
     ];
 
