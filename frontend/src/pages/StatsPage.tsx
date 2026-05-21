@@ -260,7 +260,9 @@ export function StatsPage() {
                         {showSpeciesChart && bySpecies && bySpecies.length > 0 && (
                             <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-6">
                                 <h2 className="text-xl font-serif italic text-slate-100 mb-4">Detaljer per art</h2>
-                                <div className="overflow-x-auto">
+
+                                {/* Desktop: Tabell */}
+                                <div className="hidden md:block overflow-x-auto">
                                     <table className="w-full text-sm">
                                         <thead>
                                             <tr className="text-left text-slate-400 border-b border-slate-800">
@@ -293,6 +295,46 @@ export function StatsPage() {
                                             ))}
                                         </tbody>
                                     </table>
+                                </div>
+
+                                <div className="md:hidden space-y-3">
+                                    {bySpecies.map(s => (
+                                        <div
+                                            key={s.speciesName}
+                                            className="bg-slate-950/50 border border-slate-800 rounded-xl p-4"
+                                        >
+                                            <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
+                                                <h3 className="font-medium text-slate-100">{s.speciesName}</h3>
+                                                <span className="text-teal-400 font-medium">{s.count} st</span>
+                                            </div>
+                                            <div className="grid grid-cols-2 gap-3 text-sm">
+                                                <div>
+                                                    <div className="text-xs text-slate-500">Snittvikt</div>
+                                                    <div className="text-slate-300">
+                                                        {s.averageWeight ? `${s.averageWeight.toFixed(2)} kg` : '—'}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="text-xs text-slate-500">Tyngsta</div>
+                                                    <div className="text-amber-400">
+                                                        {s.largestWeight ? `${s.largestWeight} kg` : '—'}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="text-xs text-slate-500">Snittlängd</div>
+                                                    <div className="text-slate-300">
+                                                        {s.averageLength ? `${s.averageLength.toFixed(1)} cm` : '—'}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div className="text-xs text-slate-500">Längsta</div>
+                                                    <div className="text-amber-400">
+                                                        {s.largestLength ? `${s.largestLength} cm` : '—'}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         )}
