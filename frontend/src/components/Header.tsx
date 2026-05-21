@@ -6,7 +6,7 @@ export function Header() {
     const location = useLocation();
 
     const navItems = [
-        { path: '/', label: 'Dashboard' },
+        { path: '/', label: 'Översikt' },
         { path: '/add', label: 'Logga fångst' },
         { path: '/catches', label: 'Dina fångster' },
         { path: '/stats', label: 'Statistik' },
