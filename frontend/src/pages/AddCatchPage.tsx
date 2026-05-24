@@ -7,6 +7,7 @@ import { catchesApi } from '../api/catchesApi';
 import type { CatchEntryRequest } from '../types/catch';
 import { AddNewInline } from '../components/AddNewInline';
 import { speciesApi, locationsApi, luresApi } from '../api/referenceDataApi';
+import toast from 'react-hot-toast';
 
 const techniques = [
     'Spinnfiske',
@@ -37,23 +38,22 @@ export function AddCatchPage() {
     const [waterTemperature, setWaterTemperature] = useState('');
     const [addingNew, setAddingNew] = useState<'species' | 'location' | 'lure' | null>(null);
     const [notes, setNotes] = useState('');
-    const [error, setError] = useState<string | null>(null);
 
     const createMutation = useMutation({
         mutationFn: (data: CatchEntryRequest) => catchesApi.create(data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['catches'] });
             queryClient.invalidateQueries({ queryKey: ['stats'] });
+            toast.success('Fångst sparad!');
             navigate('/');
         },
-        onError: () => {
-            setError('Kunde inte spara fångsten. Försök igen.');
+        onError: (err) => {
+            toast.error(err instanceof Error ? err.message : 'Kunde inte spara fångsten.');
         }
     });
 
     function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        setError(null);
 
         const data: CatchEntryRequest = {
             speciesId,
@@ -293,12 +293,6 @@ export function AddCatchPage() {
                             />
                         </Field>
                     </Section>
-
-                    {error && (
-                        <div className="bg-red-500/10 border border-red-500/30 text-red-300 text-sm px-4 py-2.5 rounded-lg">
-                            {error}
-                        </div>
-                    )}
 
                     <div className="flex gap-3 pt-2">
                         <button
