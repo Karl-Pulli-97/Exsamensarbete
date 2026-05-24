@@ -40,10 +40,19 @@ async function request<T>(
 
     if (!response.ok) {
         const text = await response.text();
-        throw new ApiError(response.status, text || response.statusText);
+        let message = response.statusText;
+        if (text) {
+            try {
+                const parsed = JSON.parse(text);
+                message = parsed.message || text;
+            } catch {
+                message = text;
+            }
+        }
+        throw new ApiError(response.status, message);
     }
 
-    if (response.status === 204 || response.status === 201) {
+    if (response.status === 204) {
         return undefined as T;
     }
 

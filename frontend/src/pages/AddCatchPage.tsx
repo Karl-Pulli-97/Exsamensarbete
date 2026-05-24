@@ -5,8 +5,20 @@ import { Header } from '../components/Header';
 import { useReferenceData } from '../hooks/useReferenceData';
 import { catchesApi } from '../api/catchesApi';
 import type { CatchEntryRequest } from '../types/catch';
+import { AddNewInline } from '../components/AddNewInline';
+import { speciesApi, locationsApi, luresApi } from '../api/referenceDataApi';
 
-const techniques = ['Spinnfiske', 'Mete', 'Flugfiske', 'Trolling', 'Pimpel'];
+const techniques = [
+    'Spinnfiske',
+    'Haspelfiske',
+    'Multifiske',
+    'Mete',
+    'Bottenmete',
+    'Flugfiske',
+    'Trolling',
+    'Pimpel',
+    'Ismete',
+];
 
 export function AddCatchPage() {
     const navigate = useNavigate();
@@ -23,6 +35,7 @@ export function AddCatchPage() {
     const [technique, setTechnique] = useState('');
     const [weather, setWeather] = useState('');
     const [waterTemperature, setWaterTemperature] = useState('');
+    const [addingNew, setAddingNew] = useState<'species' | 'location' | 'lure' | null>(null);
     const [notes, setNotes] = useState('');
     const [error, setError] = useState<string | null>(null);
 
@@ -83,17 +96,39 @@ export function AddCatchPage() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <Section title="Vad fångade du?">
                         <Field label="Art" required>
-                            <select
-                                value={speciesId}
-                                onChange={(e) => setSpeciesId(e.target.value)}
-                                required
-                                className="select-input"
-                            >
-                                <option value="">Välj art...</option>
-                                {species.map(s => (
-                                    <option key={s.id} value={s.id}>{s.name}</option>
-                                ))}
-                            </select>
+                            <div className="flex gap-2">
+                                <select
+                                    value={speciesId}
+                                    onChange={(e) => setSpeciesId(e.target.value)}
+                                    required
+                                    className="select-input flex-1"
+                                >
+                                    <option value="">Välj art...</option>
+                                    {species.map(s => (
+                                        <option key={s.id} value={s.id}>{s.name}</option>
+                                    ))}
+                                </select>
+                                <button
+                                    type="button"
+                                    onClick={() => setAddingNew(addingNew === 'species' ? null : 'species')}
+                                    className="px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition"
+                                    title="Lägg till ny art"
+                                >
+                                    +
+                                </button>
+                            </div>
+                            {addingNew === 'species' && (
+                                <AddNewInline
+                                    placeholder="Namn på art (t.ex. Lake)"
+                                    onAdd={async (name) => {
+                                        const newSpecies = await speciesApi.create(name);
+                                        await queryClient.invalidateQueries({ queryKey: ['species'] });
+                                        setSpeciesId(newSpecies.id);
+                                        setAddingNew(null);
+                                    }}
+                                    onCancel={() => setAddingNew(null)}
+                                />
+                            )}
                         </Field>
 
                         <div className="grid grid-cols-2 gap-4">
@@ -132,16 +167,38 @@ export function AddCatchPage() {
 
                     <Section title="Var och när?">
                         <Field label="Plats">
-                            <select
-                                value={locationId}
-                                onChange={(e) => setLocationId(e.target.value)}
-                                className="select-input"
-                            >
-                                <option value="">Välj plats...</option>
-                                {locations.map(l => (
-                                    <option key={l.id} value={l.id}>{l.name}</option>
-                                ))}
-                            </select>
+                            <div className="flex gap-2">
+                                <select
+                                    value={locationId}
+                                    onChange={(e) => setLocationId(e.target.value)}
+                                    className="select-input flex-1"
+                                >
+                                    <option value="">Välj plats...</option>
+                                    {locations.map(l => (
+                                        <option key={l.id} value={l.id}>{l.name}</option>
+                                    ))}
+                                </select>
+                                <button
+                                    type="button"
+                                    onClick={() => setAddingNew(addingNew === 'location' ? null : 'location')}
+                                    className="px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition"
+                                    title="Lägg till ny plats"
+                                >
+                                    +
+                                </button>
+                            </div>
+                            {addingNew === 'location' && (
+                                <AddNewInline
+                                    placeholder="Namn på plats (t.ex. Vänern)"
+                                    onAdd={async (name) => {
+                                        const newLocation = await locationsApi.create(name);
+                                        await queryClient.invalidateQueries({ queryKey: ['locations'] });
+                                        setLocationId(newLocation.id);
+                                        setAddingNew(null);
+                                    }}
+                                    onCancel={() => setAddingNew(null)}
+                                />
+                            )}
                         </Field>
 
                         <Field label="Datum och tid" required>
@@ -157,16 +214,38 @@ export function AddCatchPage() {
 
                     <Section title="Hur fiskade du?">
                         <Field label="Bete">
-                            <select
-                                value={lureId}
-                                onChange={(e) => setLureId(e.target.value)}
-                                className="select-input"
-                            >
-                                <option value="">Välj bete...</option>
-                                {lures.map(l => (
-                                    <option key={l.id} value={l.id}>{l.name}</option>
-                                ))}
-                            </select>
+                            <div className="flex gap-2">
+                                <select
+                                    value={lureId}
+                                    onChange={(e) => setLureId(e.target.value)}
+                                    className="select-input flex-1"
+                                >
+                                    <option value="">Välj bete...</option>
+                                    {lures.map(l => (
+                                        <option key={l.id} value={l.id}>{l.name}</option>
+                                    ))}
+                                </select>
+                                <button
+                                    type="button"
+                                    onClick={() => setAddingNew(addingNew === 'lure' ? null : 'lure')}
+                                    className="px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition"
+                                    title="Lägg till nytt bete"
+                                >
+                                    +
+                                </button>
+                            </div>
+                            {addingNew === 'lure' && (
+                                <AddNewInline
+                                    placeholder="Namn på bete (t.ex. Abu Garcia Toby)"
+                                    onAdd={async (name) => {
+                                        const newLure = await luresApi.create(name);
+                                        await queryClient.invalidateQueries({ queryKey: ['lures'] });
+                                        setLureId(newLure.id);
+                                        setAddingNew(null);
+                                    }}
+                                    onCancel={() => setAddingNew(null)}
+                                />
+                            )}
                         </Field>
 
                         <Field label="Teknik">
