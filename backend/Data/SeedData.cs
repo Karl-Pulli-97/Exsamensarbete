@@ -91,8 +91,12 @@ public static class SeedData
         var random = new Random(42);
         var catches = new List<CatchEntry>();
 
-        var techniques = new[] { "Spinnfiske", "Mete", "Flugfiske", "Trolling", "Pimpel" };
+        var techniques = new[] {
+            "Spinnfiske", "Haspelfiske", "Multifiske", "Jiggfiske",
+            "Mete", "Bottenmete", "Flugfiske", "Trolling", "Pimpel", "Ismete"
+        };
         var weatherOptions = new[] { "Soligt", "Mulet", "Regn", "Vind", "Klart" };
+        var temperatureOptions = new[] { "8°C", "10°C", "12°C", "15°C", "18°C", "20°C" };
 
         // Genererar 40 fångster
         for (int i = 0; i < 40; i++)
@@ -131,6 +135,7 @@ public static class SeedData
                 Released = random.Next(0, 2) == 1,
                 Technique = techniques[random.Next(techniques.Length)],
                 Weather = weatherOptions[random.Next(weatherOptions.Length)],
+                WaterTemperature = i % 2 == 0 ? temperatureOptions[random.Next(temperatureOptions.Length)] : null,
                 Notes = i % 3 == 0 ? "Fin dag på sjön!" : null
             });
         }
