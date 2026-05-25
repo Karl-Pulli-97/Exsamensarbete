@@ -15,11 +15,9 @@ namespace FishingLog.Api.Controllers;
 public class CatchEntriesController : ControllerBase
 {
     private readonly FishingLogDbContext _context;
-    private readonly CatchQueryService _catchQueryService;
+    private readonly ICatchQueryService _catchQueryService;
 
-    public CatchEntriesController(
-        FishingLogDbContext context,
-        CatchQueryService catchQueryService)
+    public CatchEntriesController(FishingLogDbContext context, ICatchQueryService catchQueryService)
     {
         _context = context;
         _catchQueryService = catchQueryService;

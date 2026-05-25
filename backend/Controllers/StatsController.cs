@@ -13,9 +13,9 @@ namespace FishingLog.Api.Controllers;
 [Authorize]
 public class StatsController : ControllerBase
 {
-    private readonly CatchQueryService _catchQueryService;
+    private readonly ICatchQueryService _catchQueryService;
 
-    public StatsController(CatchQueryService catchQueryService)
+    public StatsController(ICatchQueryService catchQueryService)
     {
         _catchQueryService = catchQueryService;
     }

@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace FishingLog.Api.Services;
 
-public class TokenService
+public class TokenService : ITokenService
 {
     private readonly IConfiguration _configuration;
 

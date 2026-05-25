@@ -4,7 +4,7 @@ using FishingLog.Api.Models;
 
 namespace FishingLog.Api.Services;
 
-public class CatchQueryService
+public class CatchQueryService : ICatchQueryService
 {
     private readonly FishingLogDbContext _context;
 

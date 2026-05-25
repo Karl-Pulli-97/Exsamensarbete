@@ -12,9 +12,9 @@ namespace FishingLog.Api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly FishingLogDbContext _context;
-    private readonly TokenService _tokenService;
+    private readonly ITokenService _tokenService;
 
-    public AuthController(FishingLogDbContext context, TokenService tokenService)
+    public AuthController(FishingLogDbContext context, ITokenService tokenService)
     {
         _context = context;
         _tokenService = tokenService;
