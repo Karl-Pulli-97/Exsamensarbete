@@ -11,8 +11,10 @@ public class RegisterRequest
     public string Email { get; set; } = null!;
 
     [Required(ErrorMessage = "Lösenord är obligatoriskt.")]
-    [MinLength(6, ErrorMessage = "Lösenordet måste vara minst 6 tecken.")]
+    [MinLength(8, ErrorMessage = "Lösenordet måste vara minst 8 tecken.")]
     [MaxLength(100)]
+    [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d).+$",
+        ErrorMessage = "Lösenordet måste innehålla minst en bokstav och en siffra.")]
     public string Password { get; set; } = null!;
 
     [Required(ErrorMessage = "Namn är obligatoriskt.")]
