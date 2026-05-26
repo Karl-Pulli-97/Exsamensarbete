@@ -12,7 +12,7 @@ namespace FishingLog.Tests.Integration;
 
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
-    private static readonly string DbName = "IntegrationTestDb_" + Guid.NewGuid();
+    private static readonly string TestDb = "IntegrationTestDb_" + Guid.NewGuid();
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
@@ -45,7 +45,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
             services.AddDbContext<FishingLogDbContext>(options =>
             {
-                options.UseInMemoryDatabase(DbName);
+                options.UseInMemoryDatabase(TestDb);
             });
 
             services.PostConfigure<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme, options =>

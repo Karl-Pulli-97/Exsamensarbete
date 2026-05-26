@@ -2,18 +2,47 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authApi } from '../api/authApi';
 import { Logo } from '../components/Logo';
+import { FormField } from '../components/FormField';
 
 export function RegisterPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState<string | null>(null);
+    const [errors, setErrors] = useState<{ name?: string; email?: string; password?: string; general?: string }>({});
     const [loading, setLoading] = useState(false);
+
+    function validate(): boolean {
+        const newErrors: typeof errors = {};
+
+        if (!name.trim()) {
+            newErrors.name = 'Namn är obligatoriskt';
+        }
+
+        if (!email.trim()) {
+            newErrors.email = 'Email är obligatoriskt';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            newErrors.email = 'Ogiltig email-adress';
+        }
+
+        if (!password) {
+            newErrors.password = 'Lösenord är obligatoriskt';
+        } else if (password.length < 8) {
+            newErrors.password = 'Lösenordet måste vara minst 8 tecken';
+        } else if (!/(?=.*[A-Za-z])(?=.*\d)/.test(password)) {
+            newErrors.password = 'Lösenordet måste innehålla minst en bokstav och en siffra';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
-        setError(null);
+
+        if (!validate()) return;
+
+        setErrors({});
         setLoading(true);
 
         try {
@@ -22,8 +51,8 @@ export function RegisterPage() {
             localStorage.setItem('userName', response.name);
             localStorage.setItem('userEmail', response.email);
             navigate('/');
-        } catch (err) {
-            setError('Det gick inte att registrera. Email kanske används redan.');
+        } catch {
+            setErrors({ general: 'Det gick inte att registrera. Email kanske används redan.' });
         } finally {
             setLoading(false);
         }
@@ -42,54 +71,38 @@ export function RegisterPage() {
 
                 <form
                     onSubmit={handleSubmit}
+                    noValidate
                     className="bg-slate-900/70 backdrop-blur-sm border border-slate-800 rounded-2xl p-8 space-y-5 shadow-2xl"
                 >
-                    <div>
-                        <label className="block text-sm font-medium mb-2 text-slate-300">
-                            Namn
-                        </label>
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                            className="w-full bg-slate-950/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/50 transition"
-                            placeholder="Ditt namn"
-                        />
-                    </div>
+                    <FormField
+                        label="Namn"
+                        value={name}
+                        onChange={setName}
+                        placeholder="Ditt namn"
+                        error={errors.name}
+                    />
 
-                    <div>
-                        <label className="block text-sm font-medium mb-2 text-slate-300">
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                            className="w-full bg-slate-950/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/50 transition"
-                            placeholder="din@email.se"
-                        />
-                    </div>
+                    <FormField
+                        label="Email"
+                        type="email"
+                        value={email}
+                        onChange={setEmail}
+                        placeholder="din@email.se"
+                        error={errors.email}
+                    />
 
-                    <div>
-                        <label className="block text-sm font-medium mb-2 text-slate-300">
-                            Lösenord
-                        </label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            minLength={6}
-                            className="w-full bg-slate-950/50 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500/50 transition"
-                            placeholder="Minst 6 tecken"
-                        />
-                    </div>
+                    <FormField
+                        label="Lösenord"
+                        type="password"
+                        value={password}
+                        onChange={setPassword}
+                        placeholder="Minst 8 tecken, en bokstav och en siffra"
+                        error={errors.password}
+                    />
 
-                    {error && (
+                    {errors.general && (
                         <div className="bg-red-500/10 border border-red-500/30 text-red-300 text-sm px-4 py-2.5 rounded-lg">
-                            {error}
+                            {errors.general}
                         </div>
                     )}
 
