@@ -90,7 +90,7 @@ export function AddCatchPage() {
             <main className="max-w-2xl mx-auto px-4 py-8">
                 <div className="mb-8">
                     <h1 className="text-3xl font-serif italic text-slate-100">Logga ny fångst</h1>
-                    <p className="text-slate-400 mt-1">Fyll i detaljerna nedan</p>
+                    <p className="font-serif italic text-slate-400 mt-1">Fyll i detaljerna nedan</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">

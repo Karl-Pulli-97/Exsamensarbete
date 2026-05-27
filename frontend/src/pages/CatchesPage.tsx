@@ -36,7 +36,7 @@ export function CatchesPage() {
                 <div className="flex items-center justify-between mb-8">
                     <div>
                         <h1 className="text-3xl font-serif italic text-slate-100">Fångster</h1>
-                        <p className="text-slate-400 mt-1">
+                        <p className="font-serif italic text-slate-400 mt-1">
                             {catches ? `Antal fångster: ${catches.length}` : 'Laddar...'}
                         </p>
                     </div>
