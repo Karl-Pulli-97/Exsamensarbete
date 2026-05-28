@@ -54,7 +54,7 @@ export function DashboardPage() {
                             value={overview?.bestLure ?? 'Ingen data'}
                         />
                         <HighlightCard
-                            label="Bästa plats"
+                            label="Bästa sjön"
                             value={overview?.bestLocation ?? 'Ingen data'}
                         />
                     </div>
@@ -76,7 +76,7 @@ export function DashboardPage() {
                                         >
                                             <div>
                                                 <div className="font-medium text-slate-100">{c.speciesName}</div>
-                                                <div className="text-sm text-slate-400">{c.locationName ?? 'Okänd plats'}</div>
+                                                <div className="text-sm text-slate-400">{c.locationName ?? 'Okänd sjö'}</div>
                                             </div>
                                             <div className="text-right">
                                                 <div className="text-amber-400 font-medium">

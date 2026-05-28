@@ -91,13 +91,13 @@ export function StatsPage() {
                             </select>
                         </div>
                         <div>
-                            <label className="block text-xs font-medium mb-1.5 text-slate-400">Plats</label>
+                            <label className="block text-xs font-medium mb-1.5 text-slate-400">Sjö</label>
                             <select
                                 value={filter.locationId ?? ''}
                                 onChange={(e) => updateFilter('locationId', e.target.value)}
                                 className="select-input"
                             >
-                                <option value="">Alla platser</option>
+                                <option value="">Alla sjöar</option>
                                 {locations.map(l => (
                                     <option key={l.id} value={l.id}>{l.name}</option>
                                 ))}
@@ -157,7 +157,7 @@ export function StatsPage() {
                                                         borderRadius: '8px'
                                                     }}
                                                 />
-                                                <Bar dataKey="count" fill="#0d9488" radius={[8, 8, 0, 0]} />
+                                                <Bar dataKey="count" name="Antal" fill="#0d9488" radius={[8, 8, 0, 0]} />
                                             </BarChart>
                                         </ResponsiveContainer>
                                     ) : (
@@ -204,7 +204,7 @@ export function StatsPage() {
                             )}
 
                             {showLocationChart && (
-                                <ChartCard title="Bästa platser">
+                                <ChartCard title="Bästa sjöarna">
                                     {byLocation && byLocation.length > 0 ? (
                                         <ResponsiveContainer width="100%" height={300}>
                                             <BarChart data={byLocation} layout="vertical">
@@ -218,7 +218,7 @@ export function StatsPage() {
                                                         borderRadius: '8px'
                                                     }}
                                                 />
-                                                <Bar dataKey="count" fill="#d97706" radius={[0, 8, 8, 0]} />
+                                                <Bar dataKey="count" name="Antal" fill="#d97706" radius={[0, 8, 8, 0]} />
                                             </BarChart>
                                         </ResponsiveContainer>
                                     ) : (
@@ -244,6 +244,7 @@ export function StatsPage() {
                                             <Line
                                                 type="monotone"
                                                 dataKey="count"
+                                                name="Antal"
                                                 stroke="#0d9488"
                                                 strokeWidth={3}
                                                 dot={{ fill: '#0d9488', r: 5 }}

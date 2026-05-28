@@ -166,14 +166,14 @@ export function AddCatchPage() {
                     </Section>
 
                     <Section title="Var och när?">
-                        <Field label="Plats">
+                        <Field label="Sjö">
                             <div className="flex gap-2">
                                 <select
                                     value={locationId}
                                     onChange={(e) => setLocationId(e.target.value)}
                                     className="select-input flex-1"
                                 >
-                                    <option value="">Välj plats...</option>
+                                    <option value="">Välj sjö...</option>
                                     {locations.map(l => (
                                         <option key={l.id} value={l.id}>{l.name}</option>
                                     ))}
@@ -182,14 +182,14 @@ export function AddCatchPage() {
                                     type="button"
                                     onClick={() => setAddingNew(addingNew === 'location' ? null : 'location')}
                                     className="px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg transition"
-                                    title="Lägg till ny plats"
+                                    title="Lägg till ny sjö"
                                 >
                                     +
                                 </button>
                             </div>
                             {addingNew === 'location' && (
                                 <AddNewInline
-                                    placeholder="Namn på plats (t.ex. Vänern)"
+                                    placeholder="Namn på sjön (t.ex. Vänern)"
                                     onAdd={async (name) => {
                                         const newLocation = await locationsApi.create(name);
                                         await queryClient.invalidateQueries({ queryKey: ['locations'] });

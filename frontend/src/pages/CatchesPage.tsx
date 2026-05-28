@@ -77,13 +77,13 @@ export function CatchesPage() {
                         </div>
 
                         <div>
-                            <label className="block text-xs font-medium mb-1.5 text-slate-400">Plats</label>
+                            <label className="block text-xs font-medium mb-1.5 text-slate-400">Sjö</label>
                             <select
                                 value={filter.locationId ?? ''}
                                 onChange={(e) => updateFilter('locationId', e.target.value)}
                                 className="select-input"
                             >
-                                <option value="">Alla platser</option>
+                                <option value="">Alla sjöar</option>
                                 {locations.map(l => (
                                     <option key={l.id} value={l.id}>{l.name}</option>
                                 ))}
@@ -177,7 +177,7 @@ export function CatchesPage() {
                                             )}
                                         </div>
                                         <div className="text-sm text-slate-400 mt-1">
-                                            {c.locationName ?? 'Okänd plats'}
+                                            {c.locationName ?? 'Okänd sjö'}
                                             {c.lureName && ` · ${c.lureName}`}
                                             {c.technique && ` · ${c.technique}`}
                                         </div>
